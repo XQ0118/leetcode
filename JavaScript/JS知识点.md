@@ -299,3 +299,99 @@ xhr.onreadystatechange = function() {
   }
 }
 ```
+
+## 10.如何解决跨域问题
+
+1. 跨域资源共享（CORS）
+
+   > CORS（Cross-Origin Resource Sharing）跨域资源共享，定义了必须在访问跨域资源时，浏览器与服务器应该如何沟通。CORS 背后的基本思想就是使用自定义的 HTTP 头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功还是失败。
+
+   ```js
+   // 服务器端对于CORS的支持，主要就是通过设置Access-Control-Allow-Origin来进行的。如果浏览器检测到相应的设置，就可以允许Ajax进行跨域的访问
+   //指定允许其他域名访问
+   'Access-Control-Allow-Origin:*' //或指定域
+   //响应类型
+   'Access-Control-Allow-Methods:GET,POST'
+   //响应头设置
+   'Access-Control-Allow-Headers:x-requested-with,content-type'
+   ```
+
+2. 通过 jsonp 跨域
+3. 通过 WebSocket 进行跨域
+
+   > web sockets 是一种浏览器的 API，它的目标是在一个单独的持久连接上提供全双工、双向通信。
+   > web sockets 原理：在 js 创建了 web socket 之后，会有一个 HTTP 请求发送到浏览器以发起连接。取得服务器响应后，建立的连接会使用 HTTP 升级从 HTTP 协议交换为 web sockt 协议。
+
+   ```js
+   var socket = new WebSockt('ws://www.baidu.com') //http->ws; https->wss
+   socket.send('hello WebSockt')
+   socket.onmessage = function(event) {
+     var data = event.data
+   }
+   ```
+
+4. 图像 ping（单向）
+5. nginx 代理跨域
+6. nodejs 中间件代理跨域
+
+## 11.模块化开发怎么做
+
+1. 私有公有成员分离
+
+   - 利用此种方式将函数包装成一个独立的作用域，私有空间的变量和函数不会影响到全局作用域
+   - 立即执行函数,不暴露私有成员
+
+   ```js
+   var module1 = (function() {
+     var _count = 0
+     // 这里形成一个单独的私有的空间
+     // 私有成员的作用：
+     //   1、将一个成员私有化
+     //   2、抽象公共方法（其他成员中会用到的）
+     var m1 = function() {
+       //...m1 执行方法
+     }
+     var m2 = function() {
+       //...m2 执行方法
+     }
+     return {
+       m1: m1,
+       m2: m2
+     }
+   })()
+   ```
+
+## 12.异步加载 JS 的方式有哪些
+
+1. defer 值支持 IE
+2. async async="async"
+3. 创建 script，插入到 DOM 中，加载完毕后 callBack，见代码
+
+## 13. 那些操作会造成内存泄漏
+
+> 内存泄漏指任何对象在你不在拥有或者需要它之后依然存在
+
+- `setTimeout` 的第一个参数使用字符串而非函数，会引发内存泄漏
+- 闭包使用不当
+
+## 14. XML 和 JSON 的区别
+
+- 数据体积：JSON 相对于 XML 来讲，数据的体积小，传递的速度更快些。
+- 数据交互：JSON 与 JavaScript 的交互更加方便，更易解析处理
+- 数据描述：JSON 对数据的描述性比 XML 差
+- 传输速度：JSON 的速度远远快于 XML
+
+## 15.webpack 看法
+
+## 16.AMD CMD CommonJs ES6:Class 对比
+
+> 都是用于模块化定义中的模块化编程的方案；import/export 是 ES6 中新增的
+
+1. AND 异步模块定义
+   > AMD 规范则是非同步加载模块，允许指定回调函数; AMD 推荐的风格通过返回一个对象做为模块对象
+2. CMD
+   > 同步模块定义，是 SeaJS 的一个标准，SeaJS 是 CMD 概念的一个实现，SeaJS 是淘宝团队提供的一个模块开发的 js 框架.(通过 `define()`定义，没有依赖前置，通过 require 加载 jQuery 插件，CMD 是依赖就近，按需加载)
+3. CommonJs 规范
+   > CommonJS 是服务器端模块的规范，Node.js 采用了这个规范。CommonJS 规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。
+   > CommonJS 的风格通过对 module.exports 或 exports 的属性赋值来达到暴露模块对象的目的
+4. ES6 特性，模块化---export/import 对模块进行导出导入的
