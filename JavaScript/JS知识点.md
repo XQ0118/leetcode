@@ -250,3 +250,52 @@ oUl.onmouseout = function(ev) {
 - `this`总是指向函数的直接调用者（而非间接调用者）
 - 如果有`new`关键字，`this`指向`new`出来的那个对象
 - 在事件中，`this`指向触发这个事件的对象，特殊的是，`IE`中的`attachEvent`中的`this`总是指向全局对象`Window`
+
+## 7.事件模型
+
+> 事件的发生经历三个阶段:捕获阶段（`capturing`）、目标阶段（`targetin`）、冒泡阶段（`bubbling`）
+
+- 冒泡型事件：当你使用事件冒泡时，子级元素先触发，父级元素后触发
+- 捕获型事件：当你使用事件捕获时，父级元素先触发，子级元素后触发
+- `DOM`事件流：同时支持两种事件模型：捕获型事件和冒泡型事件
+- 阻止冒泡：在 `W3c` 中，使用`stopPropagation()`方法；在 `IE` 下设置`cancelBubble = true`
+- 阻止捕获：阻止事件的默认行为，例如 `click - <a>` 后的跳转。在 `W3c` 中，使用 `preventDefault()` 方法，在 `IE` 下设置 `window.event.returnValue = false`
+
+## 8. new 操作符具体干了什么
+
+1. 创建一个空对象 `var obj = new Object();`
+2. 让空对象的原型属性指向原型链 `obj.__proto__ = foo.prototype;`
+3. 让构造函数 `foo` 的 `this` 指向 `obj`, `foo.call(obj);`
+
+```js
+var obj = {} // 1
+obj.__proto__ = foo.prototype // 2
+foo.call(obj) // 3
+```
+
+## 9.Ajax 原理
+
+- `Ajax` 的原理简单来说是在用户和服务器之间加了—个中间层(`AJAX` 引擎)，通过 `XmlHttpRequest` 对象来向服务器发异步请求，从服务器获得数据，然后用 `javascript` 来操作 `DOM` 而更新页面。使用户操作与服务器响应异步化。这其中最关键的一步就是从服务器获得请求数据
+
+```js
+/** 1. 创建连接 **/
+var xhr = null
+xhr = new XMLHttpRequest()
+/** 2. 连接服务器 **/
+xhr.open('get', url, true)
+/** 3. 发送请求 **/
+xhr.send(null)
+/** 4. 接受请求 **/
+xhr.onreadystatechange = function() {
+  if (xhr.readyState == 4) {
+    // readyState 该属性表示请求/响应过程的当前活动阶段
+    // readyState == 4 表示完成
+    if (xhr.status == 200) {
+      success(xhr.responseText)
+    } else {
+      /** false **/
+      fail && fail(xhr.status)
+    }
+  }
+}
+```
