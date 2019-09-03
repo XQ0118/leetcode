@@ -396,50 +396,57 @@ xhr.onreadystatechange = function() {
    > CommonJS 的风格通过对 module.exports 或 exports 的属性赋值来达到暴露模块对象的目的
 4. ES6 特性，模块化---export/import 对模块进行导出导入的
 
-## 17.常见web安全及防护原理
+## 17.常见 web 安全及防护原理
 
 ### sql 注入原理
-> 就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令
+
+> 就是通过把 SQL 命令插入到 Web 表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的 SQL 命令
 
 - 防护
-  + 永远不要信任用户的输入，要对用户的输入进行校验，可以通过正则表达式，或限制长度，对单引号和双"-"进行转换等
-  + 永远不要使用动态拼装SQL，可以使用参数化的SQL或者直接使用存储过程进行数据查询存取
-  + 永远不要使用管理员权限的数据库连接，为每个应用使用单独的权限有限的数据库连接
-  + 不要把机密信息明文存放，请加密或者hash掉密码和敏感的信息
+  - 永远不要信任用户的输入，要对用户的输入进行校验，可以通过正则表达式，或限制长度，对单引号和双"-"进行转换等
+  - 永远不要使用动态拼装 SQL，可以使用参数化的 SQL 或者直接使用存储过程进行数据查询存取
+  - 永远不要使用管理员权限的数据库连接，为每个应用使用单独的权限有限的数据库连接
+  - 不要把机密信息明文存放，请加密或者 hash 掉密码和敏感的信息
 
-### XSS原理及防范
+### XSS 原理及防范
+
 > `Xss(cross-site scripting)`攻击指的是攻击者往`Web`页面里插入恶意`html`标签或者`javascript`代码。比如：攻击者在论坛中放一个看似安全的链接，骗取用户点击后，窃取`cookie`中的用户私密信息；或者攻击者在论坛中加一个恶意表单，当用户提交表单的时候，却把信息传送到攻击者的服务器中，而不是用户原本以为的信任站点
 
 - 防范
-  - 首先代码里对用户输入的地方和变量都需要仔细检查长度和对`”<”,”>”,”;”,”’”`等字符做过滤；其次任何内容写到页面之前都必须加以`encode`，避免不小心把`html tag `弄出来。这一个层面做好，至少可以堵住超过一半的`XSS` 攻击
+  - 首先代码里对用户输入的地方和变量都需要仔细检查长度和对`”<”,”>”,”;”,”’”`等字符做过滤；其次任何内容写到页面之前都必须加以`encode`，避免不小心把`html tag`弄出来。这一个层面做好，至少可以堵住超过一半的`XSS` 攻击
 
 ### CSRF 跨站请求伪造
+
 > 冒充用户发起请求（在用户不知情的情况下）,完成一些违背用户意愿的请求（如恶意发帖，删帖，改密码，发邮件等）。只要是伪造用户发起的请求，都可成为`CSRF`攻击
 
 - 防范
   1. 采取验证码，强制用户必须与应用进行交互，才能完成最终请求
-  2. 最好的办法是采取token验证
+  2. 最好的办法是采取 token 验证
 
 ## 18.设计模式
 
 ## 19.为什么要有同源限制
+
 - 同源策略指的是：两个页面地址中的协议，域名，端口号一致，则表示同源。
-- 不能通过`ajax`请求不同域的数据，不能通过脚本操作不同域下的DOM
+- 不能通过`ajax`请求不同域的数据，不能通过脚本操作不同域下的 DOM
 - 目的：设置同源限制主要是为了安全，如果没有同源限制存在浏览器中的`cookie`等其他数据可以任意读取，不同域下`DOM`任意操作，`ajax`任意请求的话如果浏览了恶意网站那么就会泄漏这些隐私数据
 
-## 20.JavaScript定义对象方法
+## 20.JavaScript 定义对象方法
+
 - 对象字面量：`var obj = {};`
 - 构造函数：`var obj = new Object();`
 - Object.create(): `var obj = Object.create(Object.prototype);`
 
-## 21.对promise的了解
+## 21.对 promise 的了解
+
 - 依照 `Promise/A+` 的定义，`Promise` 有四种状态：
   - `pending`: 初始状态, 非 `fulfilled` 或 `rejected`.
   - `fulfilled`: 成功的操作.
   - `rejected`: 失败的操作.
   - `settled`: `Promise` 已被 `fulfilled` 或 `rejected` ，且不是 `pending`
-- `Promise` 对象用来进行延迟(`deferred`) 和异步(`asynchronous`) 计算 
+- `Promise` 对象用来进行延迟(`deferred`) 和异步(`asynchronous`) 计算
 - 构造一个 `Promise` ，最基本的用法如下
+
   ```js
   var promise = new Promise(function(resolve, reject) {
         if (...) {  // succeed
@@ -449,10 +456,13 @@ xhr.onreadystatechange = function() {
         }
     });
   ```
+
 - `Promise` 最大的好处是在异步执行的流程中，通过 `then`, `catch` 等方法把执行代码和处理结果的代码清晰地分离了
 
-## NodeJS 的应用场景
+## 22. NodeJS 的应用场景
+
 - 特点
+
   1. 它是一个 Javascript 运行环境
   2. 依赖于 Chrome V8 引擎进行代码解释
   3. 事件驱动
@@ -460,9 +470,149 @@ xhr.onreadystatechange = function() {
   5. 单进程 单线程
 
 - 优点
+
   - 高并发（最重要）
-  - 适合I/O密集型应用
+  - 适合 I/O 密集型应用
 
 - 缺点
-  - 只支持单核CPU，不能充分利用CPU
+
+  - 只支持单核 CPU，不能充分利用 CPU
   - 可靠性低，一旦代码某个环节崩溃，整个系统都崩溃
+
+- 适合 `NodeJS` 场景
+  1. `restful API`
+  2. 统一 `web` 应用的 `UI` 层
+  3. 大量 `Ajax` 请求的应用
+
+## 23. Web 开发中绘画跟踪的方法
+
+- 什么是会话
+  > 客户端打开与服务器的连接发出请求到服务器响应客户端请求的全过程称之为会话。
+- 什么是会话跟踪
+  > 对同一个用户对服务器的连续请求 i 和接受响应的监视
+- 为什么需要会话跟踪
+  > 浏览器与服务器之间的通信是通过 HTTP 协议进行通信的，而 HTTP 协议是”无状态”的协议，它不能保存客户的信息，即一次响应完成之后连接就断开了，下一次的请求需要重新连接，这样就需要判断是否是同一个用户，所以才应会话跟踪技术来实现这种要求
+
+1. url (统一资源定位符) 重写
+   > 在 `URL` 结尾添加一个附加数据以标识该会话,把会话 `ID` 通过 `URL` 的信息传递过去，以便在服务器端进行识别不同的用户 。
+2. Cookie
+   > `Cookie` 是 `Web` 服务器发送给客户端的一小段信息，客户端请求时可以读取该信息发送到服务器端，进而进行用户的识别。
+   > 对于客户端的每次请求，服务器都会将 `Cookie` 发送到客户端,在客户端可以进行保存,以便下次使用。
+3. 隐藏表单域 `<input type="hidden">` 非常适合步需要大量数据存储的会话应用
+4. session
+   > 在服务器端会创建一个 `session` 对象，产生一个 `sessionID` 来标识这个 `session` 对象，然后将这个 `sessionID` 放入到 `Cookie` 中发送到客户端, 下次访问时, `sessionID` 会发送到服务器，在服务器端进行识别不同的用户
+
+## 24. JS 不同类型的值
+
+- 栈: 原始(基本)数据类型: `Undefined、Null、Boolean、Number、String、Symbol (ES6 新增，表示独一无二的值)`
+- 堆: 引用数据类型: 统称为 `Object` 对象，主要包括对象、数组和函数
+- 两种类型的区别：存储位置不同
+- 基本数据类型直接存储在栈 (`stack`) 中的简单数据段，占据空间小，大小固定，属于被频繁使用的数据，因此放入栈中；
+- 引用数据类型存储在堆 (`heap`) 中的对象，占据空间大，大小不固定，如果存储在栈中，将会影响程序运行的性能；引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体。
+
+## 25. JavaScript 创建对象的几种方式
+
+- 对象字面量
+
+```js
+person = {
+  name: 'xq',
+  age: '21'
+}
+```
+
+- 用 function 来模拟无参的构造函数
+
+```js
+function Person() {}
+var person = new Person() //定义一个function，如果使用new"实例化",该function可以看作是一个Class
+person.name = 'Mark'
+person.age = '25'
+person.work = function() {
+  alert(person.name + ' hello...')
+}
+person.work()
+```
+
+- 用 function 来模拟参数构造函数来实现（用 this 关键字定义构造的上下文属性）
+
+```js
+function Pet(name, age, hobby) {
+  this.name = name //this作用域：当前对象
+  this.age = age
+  this.hobby = hobby
+  this.eat = function() {
+    alert('我叫' + this.name + ',我喜欢' + this.hobby + ',是个程序员')
+  }
+}
+var maidou = new Pet('麦兜', 25, 'coding') //实例化、创建对象
+maidou.eat() //调用eat方法
+```
+
+- 用工厂方式来创建（内置对象）
+
+```js
+var wcDog = new Object()
+wcDog.name = '旺财'
+wcDog.age = 3
+wcDog.work = function() {
+  alert('我是' + wcDog.name + ',汪汪汪......')
+}
+wcDog.work()
+```
+
+- 用原型方式来创造
+
+```js
+function Dog() {}
+Dog.prototype.name = '旺财'
+Dog.prototype.eat = function() {
+  alert(this.name + '是个吃货')
+}
+var wc = new Dog()
+wc.eat()
+```
+
+- 用混合方式来创建
+
+```js
+function Car(name, price) {
+  this.name = name
+  this.price = price
+}
+Car.prototype.sell = function() {
+  alert('我是' + this.name + '，我现在卖' + this.price + '万元')
+}
+var camry = new Car('凯美瑞', 27)
+camry.sell()
+```
+
+## 26. eval() 函数功能
+
+- 把对应的字符串解析成 `JavaScript` 代码并运行
+- 应该避免使用 `eval()` ，不安全，非常耗性能
+
+## 27. null, undefined 区别
+
+- `undefined` 表示不存在这个值
+- `undefined` :是一个表示"无"的原始值或者说表示"缺少值"，就是此处应该有一个值，但是还没有定义。当尝试读取时会返回 `undefined`
+- 例如变量被声明了，但是没有赋值，就是 `undefined`
+- `null` 表示一个对象被定义了，值为空值
+- `null` 是一个对象（空对象，没有任何属性和方法）
+- 在验证 `null` 时，一定要用 `===` , `==` 无法区别 `null` 和 `undefined`
+
+## 28. ["1", "2", "3"].map(parseInt) 答案是多少
+
+- parseInt() 函数可解析一个字符串，并返回一个整数
+  - 语法：`parseInt(string, radix)`
+    - `string` 必需。要被解析的字符串
+    - `radix` 可选。表示要解析的数字的基数。该值介于 `2 ~ 36` 之间。
+      > 如果该参数小于 2 或者大于 36，则 parseInt() 将返回 NaN;
+      > 如果省略该参数或其值为 0，则数字将以 10 为基础来解析。
+- `map` 方法在调用 `callback` 函数时,会给它传递三个参数:当前正在遍历的元素,元素索引, 原数组本身 `(currentValue, index, array)`
+- 第三个参数 `parseInt` 会忽视, 但第二个参数不会,也就是说, `parseInt` 把传过来的索引值当成进制数来使用.从而返回了 `NaN` (对应的 `radix` 不合法导致解析失败)
+- 理解：`["1", "2", "3"].map(parseInt)` 应该对应的是： `[parseInt("1", 0), parseInt("2", 1), parseInt("3", 2)] parseInt("3", 2)` 的第二个参数是界于 `2-36` 之间的，之所以返回 `NaN` 是因为 字符串 "3" 里面没有合法的二进制数，所以 `NaN`
+
+## 29. javascript 代码中的"use strict";是什么意思
+
+- `use strict` 是一种 `ECMAscript 5` 添加的（严格）运行模式,这种模式使得 `Javascript` 在更严格的条件下运行,使 `JS` 编码更加规范化的模式,消除 `Javascript` 语法的一些不合理、不严谨之处，减少一些怪异行为
